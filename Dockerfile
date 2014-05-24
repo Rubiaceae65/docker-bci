@@ -1,6 +1,7 @@
 # Docker image for computer brain interfaces
 
 # Getting USB to work: docker run -t -i -privileged -v /dev/bus/usb:/dev/bus/usb bci bash
+# VERSION 1
 
 FROM debian
 MAINTAINER Mathijs de Bruin, mathijs@mathijsfietst.nl
