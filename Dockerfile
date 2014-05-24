@@ -16,13 +16,20 @@ RUN apt-get clean
 RUN apt-get install -y default-jdk octave
 
 # Common dependencies
-RUN apt-get install -y git-core subversion build-essential wget cmake automake autoconf gfortran
+RUN apt-get install -y git-core subversion build-essential wget cmake automake autoconf gfortran unzip
 
-# Build OpenVIBE
-RUN apt-get install -y unzip lua5.1-dev python-dev libexpat-dev libboost-all-dev libogre-dev libitpp-dev libeigen3-dev libgtk2.0-dev
+# Fetch and unzip OpenVIBE
 RUN wget -nv http://openvibe.inria.fr/pub/src/openvibe-0.17.1-src.zip
 RUN unzip openvibe-0.17.1-src.zip
-RUN cd openvibe-0.17.1-src/scripts && ./linux-install_dependencies
-RUN cd openvibe-0.17.1-src/scripts && ./linux-build
+WORKDIR openvibe-0.17.1-src/scripts
 
+# Installing dependencies
+RUN apt-get install sudo
+# RUN apt-get install -y lua5.1-dev python-dev libexpat-dev libboost-all-dev libogre-dev libalut-dev libvorbis-dev libitpp-dev libeigen3-dev libgtk2.0-dev libcegui-mk2-dev
+RUN ./linux-install_dependencies
+
+# Building OpenVIBE
+RUN ./linux-build
+
+# Clean afterwards
 RUN apt-get clean
