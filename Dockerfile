@@ -1,7 +1,7 @@
 # Docker image for computer brain interfaces
 
 # Getting USB to work: docker run -t -i -privileged -v /dev/bus/usb:/dev/bus/usb bci bash
-# VERSION 1
+# VERSION 2
 
 FROM debian
 MAINTAINER Mathijs de Bruin, mathijs@mathijsfietst.nl
@@ -34,3 +34,16 @@ RUN ./linux-build
 
 # Clean afterwards
 RUN apt-get clean
+
+# Fetch buffer_bci
+WORKDIR /
+
+RUN git clone https://github.com/jadref/buffer_bci.git
+
+# Java
+WORKDIR /buffer_bci/dataAcq/buffer/java
+RUN ./build.sh
+
+# C
+WORKDIR /buffer_bci/dataAcq/buffer/c
+RUN make
