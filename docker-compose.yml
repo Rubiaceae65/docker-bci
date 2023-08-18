@@ -1,0 +1,13 @@
+version: "3"
+services:
+  app:
+    image: openvibe:latest
+    build: .
+    command: /run.sh
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./meta:/meta:rw
+      - ./run.sh:/run.sh:ro
+    network_mode: host
