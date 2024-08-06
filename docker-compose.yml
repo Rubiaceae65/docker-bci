@@ -1,7 +1,7 @@
 version: "3"
 services:
-  app:
-    image: openvibe:latest
+  designer:
+    image: lala432/openvibe:latest
     build: .
     command: /run.sh
     environment:
@@ -10,4 +10,15 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./meta:/meta:rw
       - ./run.sh:/run.sh:ro
+      - /dev/bus/usb:/dev/bus/usb:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - /dev/rfcomm0:/dev/rfcomm0:rw
+      - ./giada:/giada:rw
+      - /var/run/dbus:/var/run/dbus:ro
+    network_mode: host
+  acquisition:
+    image: lala432/openvibe-wine:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile.wine
     network_mode: host
